@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mandi Bill – Billing &amp; Stock</title>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#eef2ef;--pn:#fff;--ink:#14231f;--mu:#5d706a;--ln:#c9d4cf;--gr:#1f6b4f;--go:#e0a100;--rd:#b3261e;--on:#fff;--sb:#103a2c;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1a17;--pn:#16251f;--ink:#e6efeb;--mu:#93a8a0;--ln:#2b3f37;--gr:#4fb88c;--go:#f0b92e;--rd:#ff8a80;--on:#08150f;--sb:#0a120f}}
+:root[data-theme="dark"]{--bg:#0f1a17;--pn:#16251f;--ink:#e6efeb;--mu:#93a8a0;--ln:#2b3f37;--gr:#4fb88c;--go:#f0b92e;--rd:#ff8a80;--on:#08150f;--sb:#0a120f}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 "Schibsted Grotesk",system-ui,sans-serif}
+.app{display:flex;min-height:100vh}
+aside{width:210px;background:var(--sb);color:#e6efeb;padding:18px 10px;flex:none;position:sticky;top:0;height:100vh}
+aside h1{font-size:20px;margin:0 8px 2px;font-weight:800}
+aside p{margin:0 8px 18px;font-size:12px;color:#9db8ae}
+aside button{display:block;width:100%;text-align:left;background:none;border:0;color:inherit;font:inherit;font-weight:600;padding:11px 12px;border-radius:5px;cursor:pointer;margin-bottom:2px}
+aside button.on{background:var(--go);color:#14231f}
+main{flex:1;min-width:0;padding:22px 20px 60px;max-width:1040px}
+h2{margin:0 0 14px;font-size:24px;font-weight:800;letter-spacing:-.01em}
+h3{margin:0 0 10px;font-size:16px}
+.g{display:grid;gap:12px}.g4{grid-template-columns:repeat(4,1fr)}.g2{grid-template-columns:1fr 1fr}
+.bx{background:var(--pn);border:1px solid var(--ln);border-radius:6px;padding:14px 16px;margin-bottom:12px}
+.st small{color:var(--mu);display:block}.st b{font-size:24px;font-weight:800}
+.st.hi{border-left:6px solid var(--go)}.st.lo{border-left:6px solid var(--rd)}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--go);outline-offset:1px}
+.b{background:var(--gr);color:var(--on);border:0;border-radius:4px;padding:9px 15px;font:inherit;font-weight:600;cursor:pointer}
+.b.a{background:none;color:var(--ink);border:1px solid var(--ln)}.b.d{background:none;color:var(--rd);border:1px solid var(--ln)}.b.s{padding:5px 10px;font-size:13px}
+input,select{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--ln);border-radius:4px;padding:8px 10px;width:100%;min-width:0}
+label{display:block;font-size:13px;color:var(--mu);font-weight:600}
+label input,label select{margin-top:3px;color:var(--ink);font-weight:400;font-size:15px}
+.f{display:flex;gap:10px;flex-wrap:wrap;align-items:end;margin-bottom:10px}.f>*{flex:1 1 150px}.f>.b{flex:none}
+.sc{overflow-x:auto}table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:9px 8px;border-bottom:1px solid var(--ln);vertical-align:middle}
+th{color:var(--mu);font-size:13px;font-weight:600}.n{text-align:right!important;font-variant-numeric:tabular-nums}
+tr.k{cursor:pointer}tr.k:hover{background:var(--bg)}
+.t{display:inline-block;padding:1px 9px;border-radius:99px;font-size:13px;font-weight:600;border:1px solid}
+.t.p{color:var(--gr);border-color:var(--gr)}.t.u{color:var(--rd);border-color:var(--rd)}.t.h{color:#a06f00;border-color:var(--go)}
+.tot{margin-left:auto;max-width:320px}.tot div{display:flex;justify-content:space-between;padding:3px 0}
+.tot .gt{font-weight:800;font-size:20px;border-top:2px solid var(--ink);margin-top:6px;padding-top:8px}
+.ac{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.em{color:var(--mu);text-align:center;padding:22px 0}
+#toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:6px;font-weight:600;display:none;z-index:9}
+#pr{display:none}
+@media (max-width:760px){.app{display:block}aside{width:auto;height:auto;position:sticky;z-index:5;display:flex;overflow-x:auto;gap:4px;padding:8px}aside h1,aside p{display:none}aside button{width:auto;white-space:nowrap;margin:0}.g4{grid-template-columns:1fr 1fr}.g2{grid-template-columns:1fr}main{padding:16px 12px 60px}}
+@media print{.app,#toast{display:none!important}#pr{display:block;color:#000;background:#fff;font-size:13px}
+#pr table th,#pr table td{border-bottom:1px solid #999;color:#000}@page{size:A4;margin:14mm}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside id="menu"></aside>
+<main id="v"></main>
+</div>
+<div id="pr"></div>
+<div id="toast" role="status"></div>
+<input type="file" id="imp" accept=".json" style="display:none">
+<script>
+var KEY="mandibill-v2",page="dash",ui={edit:null,view:null,draft:null};
+var S=load();
+function load(){try{var r=localStorage.getItem(KEY);if(r)return JSON.parse(r)}catch(e){}
+return{set:{shop:"Your Shop Name",addr:"Market Road, Medinipur, West Bengal",phone:"",gstin:"",terms:"Goods once sold will not be taken back. Pay within 15 days."},
+items:[{id:1,name:"Basmati rice",unit:"25 kg bag",price:1850,gst:5,stock:40,min:10},{id:2,name:"Mustard oil",unit:"15 L tin",price:2250,gst:5,stock:25,min:8},{id:3,name:"Toor dal",unit:"30 kg bag",price:3300,gst:0,stock:6,min:10},{id:4,name:"Sugar",unit:"50 kg bag",price:2100,gst:5,stock:30,min:10}],
+customers:[{id:1,name:"Sen General Store",phone:"98300 00001",addr:"Station Road",gstin:""},{id:2,name:"Maa Tara Kirana",phone:"98300 00002",addr:"Bus Stand",gstin:""}],invoices:[]}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+function $(i){return document.getElementById(i)}
+function V(i){return $(i)?$(i).value.trim():""}
+function today(){return new Date().toISOString().slice(0,10)}
+function dmy(d){return d.split("-").reverse().join("-")}
+function inr(n){return "₹"+(Math.round(n*100)/100).toLocaleString("en-IN",{minimumFractionDigits:2,maximumFractionDigits:2})}
+function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function it(id){return S.items.find(function(i){return i.id==id})}
+function cu(id){return S.customers.find(function(c){return c.id==id})||{name:"Cash customer",phone:"",addr:"",gstin:""}}
+function calc(b){var s=0,x=0;b.lines.forEach(function(l){var a=l.qty*l.price;s+=a;x+=a*((it(l.item)||{gst:0}).gst)/100});return{sub:s,tax:x,tot:Math.max(0,s+x-(b.disc||0))}}
+function stat(b){var t=calc(b).tot;return b.paid>=t-.005?["p","Paid"]:b.paid>0?["h","Partly paid"]:["u","Unpaid"]}
+function due(b){return calc(b).tot-b.paid}
+function toast(m){var t=$("toast");t.textContent=m;t.style.display="block";clearTimeout(toast.h);toast.h=setTimeout(function(){t.style.display="none"},2200)}
+function nextNo(){return S.invoices.reduce(function(m,i){return Math.max(m,i.no)},0)+1}
+function low(){return S.items.filter(function(i){return i.stock<=i.min})}
+function srch(ph){return'<div class="f"><label>Search<input id="q" placeholder="'+ph+'"></label></div>'}
+function totBox(c){return'<div class="tot"><div><span>Subtotal</span><span>'+inr(c.sub)+'</span></div><div><span>GST</span><span>'+inr(c.tax)+'</span></div>'+(c.disc?'<div><span>Discount</span><span>−'+inr(c.disc)+'</span></div>':'')+'<div class="gt"><span>Total</span><span>'+inr(c.tot)+'</span></div></div>'}
+var MENU=[["dash","Dashboard"],["bill","New bill"],["bills","All bills"],["stock","Stock"],["cust","Customers"],["set","Settings"]];
+function go(p){page=p;ui.edit=null;ui.view=null;if(p=="bill"&&!ui.draft)newDraft();render();window.scrollTo(0,0)}
+function render(){
+ $("menu").innerHTML='<h1>Mandi Bill</h1><p>Billing &amp; stock</p>'+MENU.map(function(m){return'<button data-a="go" data-p="'+m[0]+'" class="'+(page==m[0]?"on":"")+'">'+m[1]+'</button>'}).join("");
+ $("v").innerHTML=({dash:dash,bill:bill,bills:bills,stock:stock,cust:cust,set:sett})[page]();
+ var q=$("q");if(q)q.oninput=function(){var s=q.value.toLowerCase();document.querySelectorAll("tr.r").forEach(function(r){r.style.display=r.textContent.toLowerCase().indexOf(s)<0?"none":""})}
+}
+function dash(){
+ var m=today().slice(0,7),td=0,mo=0,dueT=0,dues={};
+ S.invoices.forEach(function(b){var t=calc(b).tot;if(b.date==today())td+=t;if(b.date.slice(0,7)==m)mo+=t;var d=due(b);if(d>.005){dueT+=d;dues[b.cust]=(dues[b.cust]||0)+d}});
+ var lw=low(),h='<h2>Dashboard</h2><div class="g g4"><div class="bx st hi"><small>Money to collect</small><b>'+inr(dueT)+'</b></div><div class="bx st"><small>Sales today</small><b>'+inr(td)+'</b></div><div class="bx st"><small>Sales this month</small><b>'+inr(mo)+'</b></div><div class="bx st lo"><small>Items low on stock</small><b>'+lw.length+'</b></div></div>';
+ h+='<div class="ac" style="margin:0 0 14px"><button class="b" data-a="go" data-p="bill">Make a new bill</button><button class="b a" data-a="go" data-p="stock">Manage stock</button></div><div class="g g2"><div class="bx"><h3>Who owes you</h3>';
+ var ks=Object.keys(dues).sort(function(a,b){return dues[b]-dues[a]});
+ h+=ks.length?'<table>'+ks.slice(0,6).map(function(k){return'<tr><td>'+esc(cu(k).name)+'</td><td class="n">'+inr(dues[k])+'</td></tr>'}).join("")+'</table>':'<div class="em">No pending dues.</div>';
+ h+='</div><div class="bx"><h3>Reorder soon</h3>'+(lw.length?'<table>'+lw.map(function(i){return'<tr><td>'+esc(i.name)+'</td><td class="n">'+i.stock+' left</td></tr>'}).join("")+'</table>':'<div class="em">All items are well stocked.</div>')+'</div></div>';
+ h+='<div class="bx"><h3>Latest bills</h3>'+billTable(S.invoices.slice(-5).reverse())+'</div>';return h}
+function billTable(list){
+ if(!list.length)return'<div class="em">No bills yet. Make your first bill from New bill.</div>';
+ return'<div class="sc"><table><tr><th>Bill</th><th>Date</th><th>Customer</th><th class="n">Amount</th><th>Status</th></tr>'+list.map(function(b){var s=stat(b);return'<tr class="k r" data-a="view" data-n="'+b.no+'"><td>#'+b.no+'</td><td>'+dmy(b.date)+'</td><td>'+esc(cu(b.cust).name)+'</td><td class="n">'+inr(calc(b).tot)+'</td><td><span class="t '+s[0]+'">'+s[1]+'</span></td></tr>'}).join("")+'</table></div>'}
+function bills(){
+ if(ui.view){var b=S.invoices.find(function(x){return x.no==ui.view});if(b)return detail(b)}
+ return'<h2>All bills</h2>'+srch("Customer name, bill number or date")+'<div class="bx">'+billTable(S.invoices.slice().reverse())+'</div>'}
+function detail(b){
+ var c=calc(b),s=stat(b),h='<button class="b a s" data-a="back">← All bills</button><div class="bx" style="margin-top:12px"><h2>Bill #'+b.no+' <span class="t '+s[0]+'">'+s[1]+'</span></h2><div style="color:var(--mu)">'+dmy(b.date)+' · '+esc(cu(b.cust).name)+'</div><div class="sc"><table><tr><th>Item</th><th class="n">Qty</th><th class="n">Rate</th><th class="n">Amount</th></tr>';
+ b.lines.forEach(function(l){var i=it(l.item)||{name:"(removed item)",unit:""};h+='<tr><td>'+esc(i.name)+' <span style="color:var(--mu)">'+esc(i.unit)+'</span></td><td class="n">'+l.qty+'</td><td class="n">'+inr(l.price)+'</td><td class="n">'+inr(l.qty*l.price)+'</td></tr>'});
+ c.disc=b.disc;h+='</table></div>'+totBox(c)+'<div class="tot"><div><span>Received</span><span>'+inr(b.paid)+'</span></div><div><b>Balance due</b><b>'+inr(due(b))+'</b></div></div><div class="ac"><button class="b" data-a="print" data-n="'+b.no+'">Print bill</button>'+(due(b)>.005?'<button class="b a" data-a="pay" data-n="'+b.no+'">Record payment</button>':'')+'<button class="b d" data-a="delbill" data-n="'+b.no+'">Delete bill</button></div></div>';return h}
+function newDraft(){ui.draft={cust:S.customers.length?S.customers[0].id:0,date:today(),disc:0,paid:0,lines:[{item:S.items.length?S.items[0].id:"",qty:1,price:S.items.length?S.items[0].price:0}]}}
+function bill(){
+ if(!S.items.length)return'<h2>New bill</h2><div class="bx em">Add items in Stock first.</div>';
+ var d=ui.draft,h='<h2>New bill</h2><div class="bx"><div class="f"><label>Customer<select data-c="cust"><option value="0"'+(d.cust==0?" selected":"")+'>Cash customer</option>'+S.customers.map(function(c){return'<option value="'+c.id+'"'+(c.id==d.cust?" selected":"")+'>'+esc(c.name)+'</option>'}).join("")+'</select></label><label>Date<input type="date" value="'+d.date+'" data-c="date"></label></div><div class="sc"><table><tr><th>Item</th><th class="n">Qty</th><th class="n">Rate (₹)</th><th class="n">Amount</th><th></th></tr>';
+ d.lines.forEach(function(l,i){h+='<tr><td><select data-l="'+i+'" data-f="item">'+S.items.map(function(t){return'<option value="'+t.id+'"'+(t.id==l.item?" selected":"")+'>'+esc(t.name)+' ('+esc(t.unit)+') – '+t.stock+' in stock</option>'}).join("")+'</select></td><td><input type="number" min="1" value="'+l.qty+'" data-l="'+i+'" data-f="qty" style="min-width:70px"></td><td><input type="number" min="0" step="0.01" value="'+l.price+'" data-l="'+i+'" data-f="price" style="min-width:90px"></td><td class="n">'+inr(l.qty*l.price)+'</td><td><button class="b d s" data-a="rmline" data-i="'+i+'">Remove</button></td></tr>'});
+ var c=calc(d);c.disc=d.disc;c.tot=Math.max(0,c.sub+c.tax-d.disc);
+ h+='</table></div><div class="ac"><button class="b a" data-a="addline">+ Add another item</button></div><div class="f" style="margin-top:14px"><label>Discount (₹)<input type="number" min="0" value="'+d.disc+'" data-c="disc"></label><label>Amount received now (₹)<input type="number" min="0" value="'+d.paid+'" data-c="paid"></label></div>'+totBox(c)+'<div class="ac" style="justify-content:flex-end"><button class="b a" data-a="savebill">Save bill</button><button class="b" data-a="savebill" data-print="1">Save &amp; print</button></div></div>';return h}
+function stock(){
+ var e=ui.edit?it(ui.edit):null,v=e||{name:"",unit:"",price:"",gst:5,stock:0,min:5};
+ var h='<h2>Stock</h2><div class="bx"><h3>'+(e?"Edit item":"Add new item")+'</h3><div class="f"><label>Item name<input id="in" value="'+esc(v.name)+'"></label><label>Pack size<input id="iu" value="'+esc(v.unit)+'" placeholder="e.g. 25 kg bag"></label><label>Selling rate (₹)<input id="ip" type="number" min="0" step="0.01" value="'+v.price+'"></label><label>GST %<select id="ig">'+[0,5,12,18].map(function(g){return'<option'+(g==v.gst?" selected":"")+'>'+g+'</option>'}).join("")+'</select></label><label>Stock on hand<input id="is" type="number" min="0" value="'+v.stock+'"></label><label>Warn when below<input id="im" type="number" min="0" value="'+v.min+'"></label><button class="b" data-a="saveitem">'+(e?"Update item":"Add item")+'</button>'+(e?'<button class="b a" data-a="go" data-p="stock">Cancel</button>':'')+'</div></div>'+srch("Search items")+'<div class="bx sc"><table><tr><th>Item</th><th>Pack</th><th class="n">Rate</th><th class="n">GST</th><th class="n">In stock</th><th></th></tr>';
+ S.items.forEach(function(i){h+='<tr class="r"><td>'+esc(i.name)+(i.stock<=i.min?' <span class="t u">Low</span>':'')+'</td><td>'+esc(i.unit)+'</td><td class="n">'+inr(i.price)+'</td><td class="n">'+i.gst+'%</td><td class="n">'+i.stock+'</td><td class="n" style="white-space:nowrap"><button class="b a s" data-a="restock" data-id="'+i.id+'">+ Add stock</button> <button class="b a s" data-a="edititem" data-id="'+i.id+'">Edit</button> <button class="b d s" data-a="delitem" data-id="'+i.id+'">Remove</button></td></tr>'});
+ return h+'</table></div>'}
+function cust(){
+ var e=ui.edit?cu(ui.edit):null,v=e||{name:"",phone:"",addr:"",gstin:""};
+ var h='<h2>Customers</h2><div class="bx"><h3>'+(e?"Edit customer":"Add customer")+'</h3><div class="f"><label>Shop / name<input id="cn" value="'+esc(v.name)+'"></label><label>Phone<input id="cp" value="'+esc(v.phone)+'"></label><label>Address<input id="ca" value="'+esc(v.addr)+'"></label><label>GSTIN (optional)<input id="cg" value="'+esc(v.gstin)+'"></label><button class="b" data-a="savecust">'+(e?"Update":"Add customer")+'</button></div></div>'+srch("Search customers")+'<div class="bx sc"><table><tr><th>Customer</th><th>Phone</th><th class="n">Owes</th><th></th></tr>';
+ S.customers.forEach(function(c){var d=0;S.invoices.forEach(function(b){if(b.cust==c.id)d+=due(b)});h+='<tr class="r"><td>'+esc(c.name)+'<div style="color:var(--mu);font-size:13px">'+esc(c.addr)+'</div></td><td>'+esc(c.phone)+'</td><td class="n">'+inr(d)+'</td><td class="n" style="white-space:nowrap"><button class="b a s" data-a="editcust" data-id="'+c.id+'">Edit</button> <button class="b d s" data-a="delcust" data-id="'+c.id+'">Remove</button></td></tr>'});
+ return h+'</table></div>'}
+function sett(){var s=S.set;
+ return'<h2>Settings</h2><div class="bx"><h3>Shop details (shown on printed bills)</h3><div class="f"><label>Shop name<input id="sn" value="'+esc(s.shop)+'"></label><label>Phone<input id="sp" value="'+esc(s.phone)+'"></label></div><div class="f"><label>Address<input id="sa" value="'+esc(s.addr)+'"></label><label>GSTIN<input id="sg" value="'+esc(s.gstin)+'"></label></div><div class="f"><label>Terms at the bottom of the bill<input id="st" value="'+esc(s.terms)+'"></label><button class="b" data-a="saveset">Save details</button></div></div><div class="bx"><h3>Backup</h3><p style="color:var(--mu);margin-top:0">Data is kept in this browser only. Download a backup regularly and restore it on another device.</p><div class="ac"><button class="b a" data-a="export">Download backup</button><button class="b a" data-a="import">Restore from backup</button><button class="b d" data-a="reset">Erase all data</button></div></div>'}
+function printBill(n){
+ var b=S.invoices.find(function(x){return x.no==n}),c=calc(b),s=S.set,u=cu(b.cust);
+ var h='<div style="display:flex;justify-content:space-between;border-bottom:2px solid #000;padding-bottom:8px"><div><div style="font-size:22px;font-weight:800">'+esc(s.shop)+'</div>'+esc(s.addr)+'<br>'+(s.phone?'Phone: '+esc(s.phone):'')+(s.gstin?' · GSTIN: '+esc(s.gstin):'')+'</div><div style="text-align:right"><b style="font-size:18px">TAX INVOICE</b><br>Bill no: '+b.no+'<br>Date: '+dmy(b.date)+'</div></div><div style="margin:10px 0"><b>Bill to:</b> '+esc(u.name)+'<br>'+esc(u.addr)+(u.phone?' · '+esc(u.phone):'')+(u.gstin?'<br>GSTIN: '+esc(u.gstin):'')+'</div><table><tr><th>#</th><th>Item</th><th class="n">Qty</th><th class="n">Rate</th><th class="n">GST</th><th class="n">Amount</th></tr>';
+ b.lines.forEach(function(l,i){var t=it(l.item)||{name:"(item)",unit:"",gst:0};h+='<tr><td>'+(i+1)+'</td><td>'+esc(t.name)+' '+esc(t.unit)+'</td><td class="n">'+l.qty+'</td><td class="n">'+inr(l.price)+'</td><td class="n">'+t.gst+'%</td><td class="n">'+inr(l.qty*l.price)+'</td></tr>'});
+ c.disc=b.disc;h+='</table><div style="display:flex;justify-content:space-between;margin-top:10px"><div style="max-width:55%">'+(c.tax?'CGST: '+inr(c.tax/2)+' · SGST: '+inr(c.tax/2):'')+'</div><div style="width:280px">'+totBox(c).replace('class="tot"','style="margin:0"')+'<div style="display:flex;justify-content:space-between"><span>Received</span><span>'+inr(b.paid)+'</span></div><div style="display:flex;justify-content:space-between"><b>Balance due</b><b>'+inr(due(b))+'</b></div></div></div><div style="display:flex;justify-content:space-between;margin-top:50px"><div style="font-size:12px;max-width:60%">'+esc(s.terms)+'</div><div style="border-top:1px solid #000;padding-top:4px">Authorised signature</div></div>';
+ $("pr").innerHTML=h;setTimeout(function(){window.print()},100)}
+var A={
+ go:function(e){go(e.dataset.p)},
+ view:function(e){ui.view=e.dataset.n;render()},back:function(){ui.view=null;render()},
+ addline:function(){var i=S.items[0];ui.draft.lines.push({item:i.id,qty:1,price:i.price});render()},
+ rmline:function(e){if(ui.draft.lines.length>1){ui.draft.lines.splice(e.dataset.i,1);render()}},
+ savebill:function(e){var d=ui.draft,ls=d.lines.filter(function(l){return l.qty>0&&it(l.item)});
+  if(!ls.length)return toast("Add at least one item with a quantity.");
+  var need={};ls.forEach(function(l){need[l.item]=(need[l.item]||0)+l.qty});
+  for(var k in need)if(need[k]>it(k).stock&&!confirm(it(k).name+": only "+it(k).stock+" in stock, bill is for "+need[k]+". Save anyway?"))return;
+  for(var k in need)it(k).stock=Math.max(0,it(k).stock-need[k]);
+  var no=nextNo();S.invoices.push({no:no,date:d.date,cust:+d.cust,disc:d.disc,paid:Math.min(d.paid,calc({lines:ls,disc:d.disc}).tot),lines:ls});save();ui.draft=null;toast("Bill #"+no+" saved");
+  page="bills";ui.view=no;render();if(e.dataset.print)printBill(no)},
+ print:function(e){printBill(e.dataset.n)},
+ pay:function(e){var b=S.invoices.find(function(x){return x.no==e.dataset.n}),a=parseFloat(prompt("Amount received (₹). Balance due is "+inr(due(b)),due(b).toFixed(2)));if(a>0){b.paid=Math.min(calc(b).tot,b.paid+a);save();toast("Payment recorded");render()}},
+ delbill:function(e){if(!confirm("Delete this bill? Stock will be added back."))return;var b=S.invoices.find(function(x){return x.no==e.dataset.n});b.lines.forEach(function(l){if(it(l.item))it(l.item).stock+=l.qty});S.invoices=S.invoices.filter(function(x){return x!==b});save();ui.view=null;toast("Bill deleted");render()},
+ saveitem:function(){var n=V("in");if(!n)return toast("Enter the item name.");var o={name:n,unit:V("iu"),price:+V("ip")||0,gst:+V("ig"),stock:+V("is")||0,min:+V("im")||0};
+  if(ui.edit)Object.assign(it(ui.edit),o);else{o.id=Date.now();S.items.push(o)}save();ui.edit=null;toast("Item saved");render()},
+ edititem:function(e){ui.edit=+e.dataset.id;render();window.scrollTo(0,0)},
+ delitem:function(e){if(confirm("Remove this item? Old bills will still show it as removed.")){S.items=S.items.filter(function(i){return i.id!=e.dataset.id});save();render()}},
+ restock:function(e){var i=it(e.dataset.id),a=parseInt(prompt("How many "+i.unit+" of "+i.name+" did you receive?","10"));if(a>0){i.stock+=a;save();toast(i.name+" stock is now "+i.stock);render()}},
+ savecust:function(){var n=V("cn");if(!n)return toast("Enter the shop name.");var o={name:n,phone:V("cp"),addr:V("ca"),gstin:V("cg")};
+  if(ui.edit)Object.assign(cu(ui.edit),o);else{o.id=Date.now();S.customers.push(o)}save();ui.edit=null;toast("Customer saved");render()},
+ editcust:function(e){ui.edit=+e.dataset.id;render();window.scrollTo(0,0)},
+ delcust:function(e){if(S.invoices.some(function(b){return b.cust==e.dataset.id}))return toast("This customer has bills, so can't be removed.");S.customers=S.customers.filter(function(c){return c.id!=e.dataset.id});save();render()},
+ saveset:function(){S.set={shop:V("sn"),phone:V("sp"),addr:V("sa"),gstin:V("sg"),terms:V("st")};save();toast("Details saved")},
+ export:function(){var u=URL.createObjectURL(new Blob([JSON.stringify(S)],{type:"application/json"})),a=document.createElement("a");a.href=u;a.download="mandi-bill-backup-"+today()+".json";a.click()},
+ import:function(){$("imp").click()},
+ reset:function(){if(confirm("Erase ALL bills, stock and customers? This cannot be undone.")){try{localStorage.removeItem(KEY)}catch(e){}S=load();ui.draft=null;go("dash")}}
+};
+document.addEventListener("click",function(ev){var e=ev.target.closest("[data-a]");if(e&&A[e.dataset.a])A[e.dataset.a](e)});
+document.addEventListener("change",function(ev){var e=ev.target,d=ui.draft;
+ if(e.id=="imp"){var f=e.files[0];if(!f)return;var r=new FileReader();r.onload=function(){try{var o=JSON.parse(r.result);if(!o.items||!o.invoices)throw 0;S=o;save();toast("Backup restored");go("dash")}catch(x){toast("That file is not a valid backup.")}};r.readAsText(f);return}
+ if(!d)return;if(e.dataset.c){var k=e.dataset.c;d[k]=k=="date"?e.value:k=="cust"?+e.value:Math.max(0,+e.value||0);render()}
+ else if(e.dataset.l){var l=d.lines[e.dataset.l],f2=e.dataset.f;if(f2=="item"){l.item=+e.value;l.price=it(l.item).price}else l[f2]=Math.max(0,+e.value||0);render()}});
+render();
+</script>
+</body>
+</html>
